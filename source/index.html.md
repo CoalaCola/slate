@@ -168,7 +168,7 @@ When the user wants to transfer value from exchange to Sygna wallet, return the 
 ```json
 [
       {
-          "coinType": <string>, #BTC|ETH...
+          "coinType": "BTC|ETH|BCH...",
           "exchangeAddress": <string>
       }
 ]

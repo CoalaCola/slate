@@ -26,15 +26,15 @@ The Sygna API allows you to validate the source and recipients of a Blockchain t
 > To authorize, use this code:
 
 ```ruby
-require 'kittn'
+require 'sygna'
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
+api = Sygna::APIClient.authorize!('meowmeowmeow')
 ```
 
 ```python
-import kittn
+import sygna
 
-api = kittn.authorize('meowmeowmeow')
+api = sygna.authorize('meowmeowmeow')
 ```
 
 ```shell
@@ -44,16 +44,16 @@ curl "api_endpoint_here"
 ```
 
 ```javascript
-const kittn = require("kittn");
+const sygna = require("sygna");
 
-let api = kittn.authorize("meowmeowmeow");
+let api = sygna.authorize("meowmeowmeow");
 ```
 
 > Make sure to replace `meowmeowmeow` with your API key.
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+sygna uses API keys to allow access to the API. You can register a new sygna API key at our [developer portal](http://example.com/developers).
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+sygna expects for the API key to be included in all API requests to the server in a header that looks like the following:
 
 `Authorization: meowmeowmeow`
 
@@ -168,7 +168,7 @@ When the user wants to transfer value from exchange to Sygna wallet, return the 
 ```json
 [
       {
-          "coinType": "BTC|ETH|BCH...",
+          "coinType": <string>, #BTC|ETH...
           "exchangeAddress": <string>
       }
 ]

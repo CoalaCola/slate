@@ -16,58 +16,50 @@ search: true
 
 # Introduction
 
-The Sygna API allows you to validate the source and recipients of a Blockchain transaction.
+The Sygna API allows you to validate the source or recipient of a Blockchain transaction.
+
+**API METHODS:**
+
+**GET** 
+
+* **getAddress** -  To obtain a Sygna-Certified address for a user who has already been KYC'd.
+* **getAddressStatus** - To query the status of an address  (possible: External, Whitelisted, Banned, Restricted, ...) 
+
+**POST**
+
+* **addUser** - Adds a user to the Sygna whitelist - requires the User to have already gone through the exchange KYC 
+* **linkAddress**  - Links an existing Address to an existing Sygna UserID. (Individual Addresses have to be Linked to KYC identities)
+
 
 # Authentication
 
-> To authorize, use this code:
-
-```ruby
-require 'sygna'
-
-api = Sygna::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import sygna
-
-api = sygna.authorize('meowmeowmeow')
-```
+> **To authorize, use this code:**
 
 ```shell
 # With shell, you can just pass the correct header with each request
 curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+  -H "Authorization: <sygnaAPIkey>"
 ```
 
-```javascript
-const sygna = require("sygna");
+Sygna uses API keys to allow access to the API. You can register a new Sygna API key at our [developer portal](http://Sygna.com/developers).
 
-let api = sygna.authorize("meowmeowmeow");
-```
+Sygna expects for the API key to be included in all API requests to the server in a header that looks like the following:
 
-> Make sure to replace `meowmeowmeow` with your API key.
+`Authorization: <sygnaAPIkey>`
 
-sygna uses API keys to allow access to the API. You can register a new sygna API key at our [developer portal](http://example.com/developers).
 
-sygna expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
 
 #Schema
-All API access is over HTTPS, and all data is sent and received in JSON. Blank fields are included as null instead of being omitted. TLS (v1.2) is supported.
+API access is over **https**. All data is sent and received via **json**.   
+Blank fields are included as null instead of being omitted. TLS (v1.2) is supported.
 
 A sample curl command might look like this:
 
-`curl -X GET --header 'Accept: application/json' --header 'Token: <API_KEY>' 'https://test.sygna.com/api/syg/v1/get_address'`
+`curl -X GET --header 'Accept: application/json' --header 'Authorization: <sygnaAPIkey>' 'https://api.sygna.com/api/syg/v1/getaddress'`
 
 Or this:
 
-`curl -X POST --header 'Accept: application/json' --header 'Token: <API_KEY>' --header 'Content-Type: application/json' --data '[{"asset": "BTC", "transferReference": "<TX_HASH>:<TX_INDEX>"}]' 'https://test.sygna.com/api/syg/v1/<USER_ID>/transfers/received'`
+`curl -X POST --header 'Accept: application/json' --header 'Authorization: <sygnaAPIkey>' --header 'Content-Type: application/json' --data '[{"asset": "BTC", "transferReference": "<TX_HASH>:<TX_INDEX>"}]' 'https://api.sygna.com/api/syg/v1/<USER_ID>/transfers/received'`
 
 
 #Request URLs
@@ -83,6 +75,13 @@ Production server URL for the API is at:
 
 ## Add User
 
+
+
+
+
+Adds a user to the Sygna whitelist - requires the User to have already gone through the exchange KYC
+
+### HTTP Request
 > Request Body
 
 ```json
@@ -95,6 +94,18 @@ Production server URL for the API is at:
 ]
 ```
 
+`POST /users/addUser`
+
+### Request Parameters
+
+
+| Parameter      | Description                  |
+| -------------- | ---------------------------- |
+| exchangeUserId | The user id in your exchange |
+| name           | User name                    |
+| email          | User email                   |
+
+### Response Parameters
 > Response Body
 
 ```json
@@ -105,39 +116,16 @@ Production server URL for the API is at:
 ]
 ```
 
-Adds a user to the Sygna whitelist - requires the User to have already gone through the exchange KYC
-
-### HTTP Request
-
-`POST /users/addUser`
-
-### Request Parameters
-
-| Parameter      | Description                  |
-| -------------- | ---------------------------- |
-| exchangeUserId | The user id in your exchange |
-| name           | User name                    |
-| email          | User email                   |
-
-### Response Parameters
-
 | Parameter   | Description          |
 | ----------- | -------------------- |
 | sygnaUserId | The user id in Sygna |
 
 <aside class="success">
-Remember — Add user before in the beginning service
+Remember — A user first has to be added before his addresses can be Sygna-Certified
 </aside>
 
 ## Get Sygna Address for the User
 
-> Response Body
-
-```json
-{
-  "sygnaAddress": <string>
-}
-```
 
 When the user wants to transfer value from exchange to Sygna wallet, return the address.
 
@@ -153,10 +141,18 @@ When the user wants to transfer value from exchange to Sygna wallet, return the 
 | coinType  | Which crypto of the address (BTC/ETH/BCH) |
 
 ### Response Body
+> Response Body
+
+```json
+{
+  "sygnaAddress": <string>
+}
+```
 
 | Parameter    | Description                      |
 | ------------ | -------------------------------- |
 | sygnaAddress | The user address in Sygna wallet |
+
 
 ## Link Address
 

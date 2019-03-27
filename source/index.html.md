@@ -1,5 +1,5 @@
 ---
-title: API Reference
+title: Sygna API Spec
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
@@ -19,11 +19,7 @@ search: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
-
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
-
-This example API documentation page was created with [Slate](https://github.com/lord/slate). Feel free to edit it and use it as a base for your own API's documentation.
+The Sygna API allows you to validate the source and recipients of a Blockchain transaction.
 
 # Authentication
 
@@ -48,9 +44,9 @@ curl "api_endpoint_here"
 ```
 
 ```javascript
-const kittn = require('kittn');
+const kittn = require("kittn");
 
-let api = kittn.authorize('meowmeowmeow');
+let api = kittn.authorize("meowmeowmeow");
 ```
 
 > Make sure to replace `meowmeowmeow` with your API key.
@@ -65,175 +61,160 @@ Kittn expects for the API key to be included in all API requests to the server i
 You must replace <code>meowmeowmeow</code> with your personal API key.
 </aside>
 
-# Kittens
+#Schema
+All API access is over HTTPS, and all data is sent and received in JSON. Blank fields are included as null instead of being omitted. TLS (v1.2) is supported.
 
-## Get All Kittens
+A sample curl command might look like this:
 
-```ruby
-require 'kittn'
+`curl -X GET --header 'Accept: application/json' --header 'Token: <API_KEY>' 'https://test.sygna.com/api/syg/v1/get_address'`
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
+Or this:
 
-```python
-import kittn
+`curl -X POST --header 'Accept: application/json' --header 'Token: <API_KEY>' --header 'Content-Type: application/json' --data '[{"asset": "BTC", "transferReference": "<TX_HASH>:<TX_INDEX>"}]' 'https://test.sygna.com/api/syg/v1/<USER_ID>/transfers/received'`
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
 
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
+#Request URLs
+The URL for all test requests to the API is:
 
-```javascript
-const kittn = require('kittn');
+`https://test.sygna.com/api/syg/v1`
 
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
+Production server URL for the API is at:
 
-> The above command returns JSON structured like this:
+`https://api.sygna.com/api/syg/v1`
+
+# Users
+
+## Add User
+
+> Request Body
 
 ```json
 [
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
+      {
+          "exchangeUserId": <string>,
+          "name": <string>,
+          "email": <string>
+      }
 ]
 ```
 
-This endpoint retrieves all kittens.
+> Response Body
+
+```json
+[
+      {
+          "sygnaUserId": <string>
+      }
+]
+```
+
+Adds a user to the Sygna whitelist - requires the User to have already gone through the exchange KYC
 
 ### HTTP Request
 
-`GET http://example.com/api/kittens`
+`POST /users/addUser`
 
-### Query Parameters
+### Request Parameters
 
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+| Parameter      | Description                  |
+| -------------- | ---------------------------- |
+| exchangeUserId | The user id in your exchange |
+| name           | User name                    |
+| email          | User email                   |
+
+### Response Parameters
+
+| Parameter   | Description          |
+| ----------- | -------------------- |
+| sygnaUserId | The user id in Sygna |
 
 <aside class="success">
-Remember — a happy kitten is an authenticated kitten!
+Remember — Add user before in the beginning service
 </aside>
 
-## Get a Specific Kitten
+## Get Sygna Address for the User
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
+> Response Body
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "sygnaAddress": <string>
 }
 ```
 
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+When the user wants to transfer value from exchange to Sygna wallet, return the address.
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`GET /users/{userId}/getAddress/{coinType}`
 
 ### URL Parameters
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+| Parameter | Description                               |
+| --------- | ----------------------------------------- |
+| userId    | The user id in Sygna                      |
+| coinType  | Which crypto of the address (BTC/ETH/BCH) |
 
-## Delete a Specific Kitten
+### Response Body
 
-```ruby
-require 'kittn'
+| Parameter    | Description                      |
+| ------------ | -------------------------------- |
+| sygnaAddress | The user address in Sygna wallet |
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
+## Link Address
+
+> Request Body
+
+```json
+[
+      {
+          "coinType": <string>, #BTC|ETH...
+          "exchangeAddress": <string>
+      }
+]
 ```
 
-```python
-import kittn
+Links an existing Address to an existing Sygna UserID.
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
+### HTTP Request
 
-```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
+`POST /users/{userId}/linkAddress`
 
-```javascript
-const kittn = require('kittn');
+### URL Parameters
 
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
+| Parameter | Description          |
+| --------- | -------------------- |
+| userId    | The user id in Sygna |
 
-> The above command returns JSON structured like this:
+### Request Body
+
+| Parameter       | Description                               |
+| --------------- | ----------------------------------------- |
+| coinType        | Which crypto of the address (BTC/ETH/BCH) |
+| exchangeAddress | The address from exchange wallet          |
+
+###
+
+# Address
+
+## Get Address Status
+
+> Response Body
 
 ```json
 {
-  "id": 2,
-  "deleted" : ":("
+   "status": "External|Whitelisted|Banned|Restricted"
 }
 ```
 
-This endpoint deletes a specific kitten.
+When you want to query the status of an address
 
 ### HTTP Request
 
-`DELETE http://example.com/kittens/<ID>`
+`GET /addresses/{address}/getStatus`
 
-### URL Parameters
+### Response Body
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
-
+| Parameter | Description               |
+| --------- | ------------------------- |
+| status    | The status of the address |

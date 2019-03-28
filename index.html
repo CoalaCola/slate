@@ -219,13 +219,10 @@
             <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
           </li>
           <li>
-            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
-          </li>
-          <li>
-            <a href="#schema" class="toc-h1 toc-link" data-title="Schema">Schema</a>
-          </li>
-          <li>
             <a href="#request-urls" class="toc-h1 toc-link" data-title="Request URLs">Request URLs</a>
+          </li>
+          <li>
+            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
           </li>
           <li>
             <a href="#users" class="toc-h1 toc-link" data-title="Users">Users</a>
@@ -262,56 +259,48 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>The Sygna API allows you to validate the source and recipients of a Blockchain transaction.</p>
+<p>The Sygna API allows you to validate the source or recipient of a Blockchain transaction.</p>
+
+<p><strong>API METHODS:</strong></p>
+
+<p><em><strong><code>GET</code></strong></em><br>
+- <strong>getAddress</strong> -  Generates a Sygna-Certified address for a user who has already been KYC&#39;d.<br>
+- <strong>getAddressStatus</strong> - Queries the status of an address (ex: External, Whitelisted, Banned, Restricted, ...) </p>
+
+<p><em><strong><code>POST</code></strong></em><br>
+- <strong>addUser</strong> - Adds a user to the Sygna whitelist - requires the User to have already gone through the exchange KYC<br>
+- <strong>linkAddress</strong>  - Links an existing Address to an existing Sygna UserID. (Individual Addresses have to be linked to KYC identities)</p>
+<h1 id='request-urls'>Request URLs</h1>
+<p>Test requests should use the following endpoint:<br>
+<code>https://test.sygna.com/api/syg/v1</code></p>
+
+<p>Production server URL for the API is located at:<br>
+<code>https://api.sygna.com/api/syg/v1</code></p>
 <h1 id='authentication'>Authentication</h1>
 <blockquote>
-<p>To authorize, use this code:</p>
+<p><strong>To authorize, use this code:</strong></p>
 </blockquote>
-<pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'sygna'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Sygna</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">sygna</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">sygna</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">sygna</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"sygna"</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">sygna</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s2">"meowmeowmeow"</span><span class="p">);</span>
+<pre class="highlight shell tab-shell"><code><span class="c"># remember to pass the sygnaAPIkey in the header with each request</span>
+curl <span class="s2">"https://api.sygna.com/api/syg/v1/&lt;request&gt;"</span>
+  -H <span class="s2">"Authorization: &lt;sygnaAPIkey&gt;"</span>
 </code></pre>
-<blockquote>
-<p>Make sure to replace <code>meowmeowmeow</code> with your API key.</p>
-</blockquote>
+<p>Sygna uses API keys for access control. Register a new Sygna API key through our <a href="http://sygna.com/developers">developer portal</a>.</p>
 
-<p>sygna uses API keys to allow access to the API. You can register a new sygna API key at our <a href="http://example.com/developers">developer portal</a>.</p>
+<p>The API key must be included in the message header <strong>for every request</strong>, using the following format:<code>Authorization: &lt;sygnaAPIkey&gt;</code></p>
 
-<p>sygna expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
-
-<p><code>Authorization: meowmeowmeow</code></p>
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-<h1 id='schema'>Schema</h1>
-<p>All API access is over HTTPS, and all data is sent and received in JSON. Blank fields are included as null instead of being omitted. TLS (v1.2) is supported.</p>
+<p>API access is over <strong>https</strong>. All data is sent and received via <strong>json</strong>.<br>
+Blank fields are included as null instead of being omitted. TLS (v1.2) is supported.</p>
 
 <p>A sample curl command might look like this:</p>
 
-<p><code>curl -X GET --header &#39;Accept: application/json&#39; --header &#39;Token: &lt;API_KEY&gt;&#39; &#39;https://test.sygna.com/api/syg/v1/get_address&#39;</code></p>
+<p><code>curl -X GET --header &#39;Accept: application/json&#39; --header &#39;Authorization: &lt;sygnaAPIkey&gt;&#39; &#39;https://api.sygna.com/api/syg/v1/getaddress&#39;</code></p>
 
 <p>Or this:</p>
 
-<p><code>curl -X POST --header &#39;Accept: application/json&#39; --header &#39;Token: &lt;API_KEY&gt;&#39; --header &#39;Content-Type: application/json&#39; --data &#39;[{&quot;asset&quot;: &quot;BTC&quot;, &quot;transferReference&quot;: &quot;&lt;TX_HASH&gt;:&lt;TX_INDEX&gt;&quot;}]&#39; &#39;https://test.sygna.com/api/syg/v1/&lt;USER_ID&gt;/transfers/received&#39;</code></p>
-<h1 id='request-urls'>Request URLs</h1>
-<p>The URL for all test requests to the API is:</p>
-
-<p><code>https://test.sygna.com/api/syg/v1</code></p>
-
-<p>Production server URL for the API is at:</p>
-
-<p><code>https://api.sygna.com/api/syg/v1</code></p>
+<p><code>curl -X POST --header &#39;Accept: application/json&#39; --header &#39;Authorization: &lt;sygnaAPIkey&gt;&#39; --header &#39;Content-Type: application/json&#39; --data &#39;[{&quot;asset&quot;: &quot;BTC&quot;, &quot;transferReference&quot;: &quot;&lt;TX_HASH&gt;:&lt;TX_INDEX&gt;&quot;}]&#39; &#39;https://api.sygna.com/api/syg/v1/&lt;USER_ID&gt;/transfers/received&#39;</code></p>
 <h1 id='users'>Users</h1><h2 id='add-user'>Add User</h2>
+<p>Adds a user to the Sygna whitelist - requires the User to have already gone through the exchange KYC</p>
+<h3 id='http-request'>HTTP Request</h3>
 <blockquote>
 <p>Request Body</p>
 </blockquote>
@@ -323,17 +312,6 @@ You must replace <code>meowmeowmeow</code> with your personal API key.
       </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
-<blockquote>
-<p>Response Body</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-      </span><span class="p">{</span><span class="w">
-          </span><span class="s2">"sygnaUserId"</span><span class="p">:</span><span class="w"> </span><span class="err">&lt;string&gt;</span><span class="w">
-      </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span></code></pre>
-<p>Adds a user to the Sygna whitelist - requires the User to have already gone through the exchange KYC</p>
-<h3 id='http-request'>HTTP Request</h3>
 <p><code>POST /users/addUser</code></p>
 <h3 id='request-parameters'>Request Parameters</h3>
 <table><thead>
@@ -356,6 +334,15 @@ You must replace <code>meowmeowmeow</code> with your personal API key.
 </tr>
 </tbody></table>
 <h3 id='response-parameters'>Response Parameters</h3>
+<blockquote>
+<p>Response Body</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"sygnaUserId"</span><span class="p">:</span><span class="w"> </span><span class="err">&lt;string&gt;</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -369,16 +356,9 @@ You must replace <code>meowmeowmeow</code> with your personal API key.
 </tbody></table>
 
 <aside class="success">
-Remember — Add user before in the beginning service
+Remember — A user first has to be added before his addresses can be Sygna-Certified
 </aside>
 <h2 id='get-sygna-address-for-the-user'>Get Sygna Address for the User</h2>
-<blockquote>
-<p>Response Body</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"sygnaAddress"</span><span class="p">:</span><span class="w"> </span><span class="err">&lt;string&gt;</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
 <p>When the user wants to transfer value from exchange to Sygna wallet, return the address.</p>
 <h3 id='http-request-2'>HTTP Request</h3>
 <p><code>GET /users/{userId}/getAddress/{coinType}</code></p>
@@ -399,6 +379,13 @@ Remember — Add user before in the beginning service
 </tr>
 </tbody></table>
 <h3 id='response-body'>Response Body</h3>
+<blockquote>
+<p>Response Body</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"sygnaAddress"</span><span class="p">:</span><span class="w"> </span><span class="err">&lt;string&gt;</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -453,6 +440,10 @@ Remember — Add user before in the beginning service
 </tr>
 </tbody></table>
 <h1 id='address'>Address</h1><h2 id='get-address-status'>Get Address Status</h2>
+<p>When you want to query the status of an address</p>
+<h3 id='http-request-4'>HTTP Request</h3>
+<p><code>GET /addresses/{address}/getStatus</code></p>
+<h3 id='response-body-2'>Response Body</h3>
 <blockquote>
 <p>Response Body</p>
 </blockquote>
@@ -460,10 +451,6 @@ Remember — Add user before in the beginning service
    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"External|Whitelisted|Banned|Restricted"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>When you want to query the status of an address</p>
-<h3 id='http-request-4'>HTTP Request</h3>
-<p><code>GET /addresses/{address}/getStatus</code></p>
-<h3 id='response-body-2'>Response Body</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>

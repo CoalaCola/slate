@@ -277,27 +277,10 @@
 <p>Production server URL for the API is located at:<br>
 <code>https://api.sygna.com/api/syg/v1</code></p>
 <h1 id='authentication'>Authentication</h1>
-<blockquote>
-<p><strong>To authorize, use this code:</strong></p>
-</blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># remember to pass the sygnaAPIkey in the header with each request</span>
-curl <span class="s2">"https://api.sygna.com/api/syg/v1/&lt;request&gt;"</span>
-  -H <span class="s2">"Authorization: &lt;sygnaAPIkey&gt;"</span>
-</code></pre>
-<p>Sygna uses API keys for access control. Register a new Sygna API key through our <a href="http://sygna.com/developers">developer portal</a>.</p>
+<p>NOTE: Still in progress</p>
 
-<p>The API key must be included in the message header <strong>for every request</strong>, using the following format:<code>Authorization: &lt;sygnaAPIkey&gt;</code></p>
-
-<p>API access is over <strong>https</strong>. All data is sent and received via <strong>json</strong>.<br>
-Blank fields are included as null instead of being omitted. TLS (v1.2) is supported.</p>
-
-<p>A sample curl command might look like this:</p>
-
-<p><code>curl -X GET --header &#39;Accept: application/json&#39; --header &#39;Authorization: &lt;sygnaAPIkey&gt;&#39; &#39;https://api.sygna.com/api/syg/v1/getaddress&#39;</code></p>
-
-<p>Or this:</p>
-
-<p><code>curl -X POST --header &#39;Accept: application/json&#39; --header &#39;Authorization: &lt;sygnaAPIkey&gt;&#39; --header &#39;Content-Type: application/json&#39; --data &#39;[{&quot;asset&quot;: &quot;BTC&quot;, &quot;transferReference&quot;: &quot;&lt;TX_HASH&gt;:&lt;TX_INDEX&gt;&quot;}]&#39; &#39;https://api.sygna.com/api/syg/v1/&lt;USER_ID&gt;/transfers/received&#39;</code></p>
+<p>Currently we are planing to follow <a href="https://en.wikipedia.org/wiki/Security_Assertion_Markup_Language">SAML 2.0</a> protocol as our sso solution.
+But we haven&#39;t decide how we are going to implement this at the momoent</p>
 <h1 id='users'>Users</h1><h2 id='add-user'>Add User</h2>
 <p>Adds a user to the Sygna whitelist - requires the User to have already gone through the exchange KYC</p>
 <h3 id='http-request'>HTTP Request</h3>

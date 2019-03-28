@@ -20,36 +20,36 @@ The Sygna API allows you to validate the source or recipient of a Blockchain tra
 
 **API METHODS:**
 
-**GET** 
+_**`GET`**_   
+- **getAddress** -  Generates a Sygna-Certified address for a user who has already been KYC'd.  
+- **getAddressStatus** - Queries the status of an address (ex: External, Whitelisted, Banned, Restricted, ...) 
 
-* **getAddress** -  To obtain a Sygna-Certified address for a user who has already been KYC'd.
-* **getAddressStatus** - To query the status of an address  (possible: External, Whitelisted, Banned, Restricted, ...) 
+_**`POST`**_   
+- **addUser** - Adds a user to the Sygna whitelist - requires the User to have already gone through the exchange KYC  
+- **linkAddress**  - Links an existing Address to an existing Sygna UserID. (Individual Addresses have to be linked to KYC identities)
 
-**POST**
 
-* **addUser** - Adds a user to the Sygna whitelist - requires the User to have already gone through the exchange KYC 
-* **linkAddress**  - Links an existing Address to an existing Sygna UserID. (Individual Addresses have to be Linked to KYC identities)
+#Request URLs
+Test requests should use the following endpoint:  
+`https://test.sygna.com/api/syg/v1`
 
+Production server URL for the API is located at:  
+`https://api.sygna.com/api/syg/v1`
 
 # Authentication
 
 > **To authorize, use this code:**
 
 ```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
+# remember to pass the sygnaAPIkey in the header with each request
+curl "https://api.sygna.com/api/syg/v1/<request>"
   -H "Authorization: <sygnaAPIkey>"
 ```
 
-Sygna uses API keys to allow access to the API. You can register a new Sygna API key at our [developer portal](http://Sygna.com/developers).
+Sygna uses API keys for access control. Register a new Sygna API key through our [developer portal](http://sygna.com/developers).
 
-Sygna expects for the API key to be included in all API requests to the server in a header that looks like the following:
+The API key must be included in the message header **for every request**, using the following format:`Authorization: <sygnaAPIkey>`
 
-`Authorization: <sygnaAPIkey>`
-
-
-
-#Schema
 API access is over **https**. All data is sent and received via **json**.   
 Blank fields are included as null instead of being omitted. TLS (v1.2) is supported.
 
@@ -62,14 +62,6 @@ Or this:
 `curl -X POST --header 'Accept: application/json' --header 'Authorization: <sygnaAPIkey>' --header 'Content-Type: application/json' --data '[{"asset": "BTC", "transferReference": "<TX_HASH>:<TX_INDEX>"}]' 'https://api.sygna.com/api/syg/v1/<USER_ID>/transfers/received'`
 
 
-#Request URLs
-The URL for all test requests to the API is:
-
-`https://test.sygna.com/api/syg/v1`
-
-Production server URL for the API is at:
-
-`https://api.sygna.com/api/syg/v1`
 
 # Users
 
@@ -192,13 +184,7 @@ Links an existing Address to an existing Sygna UserID.
 
 ## Get Address Status
 
-> Response Body
 
-```json
-{
-   "status": "External|Whitelisted|Banned|Restricted"
-}
-```
 
 When you want to query the status of an address
 
@@ -207,6 +193,13 @@ When you want to query the status of an address
 `GET /addresses/{address}/getStatus`
 
 ### Response Body
+> Response Body
+
+```json
+{
+   "status": "External|Whitelisted|Banned|Restricted"
+}
+```
 
 | Parameter | Description               |
 | --------- | ------------------------- |

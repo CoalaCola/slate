@@ -16,7 +16,8 @@ search: true
 
 # Introduction
 
-The Sygna API allows you to validate the source or recipient of a Blockchain transaction.
+The Sygna API allows you to validate the source or recipient of a Blockchain transaction.  
+
 
 **API METHODS:**
 
@@ -28,7 +29,9 @@ _**`POST`**_
 - **addUser** - Adds a user to the Sygna whitelist - requires the User to have already gone through the exchange KYC  
 - **linkAddress**  - Links an existing Address to an existing Sygna UserID. (Individual Addresses have to be linked to KYC identities)
 
-
+<aside class="success">
+Note — (API <b>not currently active</b> as it is being worked on)
+</aside>
 #Request URLs
 Test requests should use the following endpoint:  
 `https://test.sygna.com/api/syg/v1`
@@ -38,39 +41,12 @@ Production server URL for the API is located at:
 
 # Authentication
 
-> **To authorize, use this code:**
-
-```shell
-# remember to pass the sygnaAPIkey in the header with each request
-curl "https://api.sygna.com/api/syg/v1/<request>"
-  -H "Authorization: <sygnaAPIkey>"
-```
-
-Sygna uses API keys for access control. Register a new Sygna API key through our [developer portal](http://sygna.com/developers).
-
-The API key must be included in the message header **for every request**, using the following format:`Authorization: <sygnaAPIkey>`
-
-API access is over **https**. All data is sent and received via **json**.   
-Blank fields are included as null instead of being omitted. TLS (v1.2) is supported.
-
-A sample curl command might look like this:
-
-`curl -X GET --header 'Accept: application/json' --header 'Authorization: <sygnaAPIkey>' 'https://api.sygna.com/api/syg/v1/getaddress'`
-
-Or this:
-
-`curl -X POST --header 'Accept: application/json' --header 'Authorization: <sygnaAPIkey>' --header 'Content-Type: application/json' --data '[{"asset": "BTC", "transferReference": "<TX_HASH>:<TX_INDEX>"}]' 'https://api.sygna.com/api/syg/v1/<USER_ID>/transfers/received'`
-
-
+We are planning to follow [SAML 2.0](https://en.wikipedia.org/wiki/Security_Assertion_Markup_Language) protocol as SSO solution.
+The implementation is still being worked on and will be updated at a later time
 
 # Users
 
-## Add User
-
-
-
-
-
+## Add User  
 Adds a user to the Sygna whitelist - requires the User to have already gone through the exchange KYC
 
 ### HTTP Request
@@ -116,10 +92,11 @@ Adds a user to the Sygna whitelist - requires the User to have already gone thro
 Remember — A user first has to be added before his addresses can be Sygna-Certified
 </aside>
 
-## Get Sygna Address for the User
+## getAddress
 
+Request a Sygna Address (for existing Sygna user)  
 
-When the user wants to transfer value from exchange to Sygna wallet, return the address.
+_usage_: When a user wants a Sygna-certified address (ex: to move funds into a Sygna-certified address to facilitate future Sygna transaction)
 
 ### HTTP Request
 
@@ -130,7 +107,7 @@ When the user wants to transfer value from exchange to Sygna wallet, return the 
 | Parameter | Description                               |
 | --------- | ----------------------------------------- |
 | userId    | The user id in Sygna                      |
-| coinType  | Which crypto of the address (BTC/ETH/BCH) |
+| coinType  | Crypto address format (BTC/ETH/BCH)       |
 
 ### Response Body
 > Response Body
@@ -163,19 +140,19 @@ Links an existing Address to an existing Sygna UserID.
 
 ### HTTP Request
 
-`POST /users/{userId}/linkAddress`
+`POST /users/{sygnaUserId}/linkAddress`
 
 ### URL Parameters
 
 | Parameter | Description          |
 | --------- | -------------------- |
-| userId    | The user id in Sygna |
+| sygnaUserId    | The user id in Sygna |
 
 ### Request Body
 
 | Parameter       | Description                               |
 | --------------- | ----------------------------------------- |
-| coinType        | Which crypto of the address (BTC/ETH/BCH) |
+| coinType        | Crypto address format (BTC/ETH/BCH)       |
 | exchangeAddress | The address from exchange wallet          |
 
 ###

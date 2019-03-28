@@ -16,8 +16,7 @@ search: true
 
 # Introduction
 
-The Sygna API allows you to validate the source or recipient of a Blockchain transaction.  
-
+The Sygna API allows you to validate the source or recipient of a Blockchain transaction.
 
 **API METHODS:**
 
@@ -32,6 +31,7 @@ _**`POST`**_
 <aside class="success">
 Note — (API <b>not currently active</b> as it is being worked on)
 </aside>
+
 #Request URLs
 Test requests should use the following endpoint:  
 `https://test.sygna.com/api/syg/v1`

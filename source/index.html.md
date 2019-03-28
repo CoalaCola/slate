@@ -37,39 +37,14 @@ Production server URL for the API is located at:
 `https://api.sygna.com/api/syg/v1`
 
 # Authentication
+NOTE: Still in progress
 
-> **To authorize, use this code:**
-
-```shell
-# remember to pass the sygnaAPIkey in the header with each request
-curl "https://api.sygna.com/api/syg/v1/<request>"
-  -H "Authorization: <sygnaAPIkey>"
-```
-
-Sygna uses API keys for access control. Register a new Sygna API key through our [developer portal](http://sygna.com/developers).
-
-The API key must be included in the message header **for every request**, using the following format:`Authorization: <sygnaAPIkey>`
-
-API access is over **https**. All data is sent and received via **json**.   
-Blank fields are included as null instead of being omitted. TLS (v1.2) is supported.
-
-A sample curl command might look like this:
-
-`curl -X GET --header 'Accept: application/json' --header 'Authorization: <sygnaAPIkey>' 'https://api.sygna.com/api/syg/v1/getaddress'`
-
-Or this:
-
-`curl -X POST --header 'Accept: application/json' --header 'Authorization: <sygnaAPIkey>' --header 'Content-Type: application/json' --data '[{"asset": "BTC", "transferReference": "<TX_HASH>:<TX_INDEX>"}]' 'https://api.sygna.com/api/syg/v1/<USER_ID>/transfers/received'`
-
-
+Currently we are planing to follow [SAML 2.0](https://en.wikipedia.org/wiki/Security_Assertion_Markup_Language) protocol as our sso solution.
+But we haven't decide how we are going to implement this at the momoent
 
 # Users
 
 ## Add User
-
-
-
-
 
 Adds a user to the Sygna whitelist - requires the User to have already gone through the exchange KYC
 

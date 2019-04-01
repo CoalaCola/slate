@@ -42,7 +42,7 @@ Production server URL for the API is located at:
 # Authentication
 NOTE: Still in progress
 
-We are planning to follow [SAML 2.0](https://en.wikipedia.org/wiki/Security_Assertion_Markup_Language) protocol as SSO solution.
+We are planning to follow `OAuth 2.0`.
 The implementation is still being worked on and will be updated at a later time
 
 # Users

@@ -21,10 +21,10 @@ The Sygna API allows you to validate the source or recipient of a Blockchain tra
 **API METHODS:**
 
 _**`GET`**_   
-- **getAddress** -  Generates a Sygna-Certified address for a user who has already been KYC'd.  
 - **getAddressStatus** - Queries the status of an address (ex: External, Whitelisted, Banned, Restricted, ...) 
 
-_**`POST`**_   
+_**`POST`**_  
+- **createNewAddress** -  Generates a Sygna-Certified address for a user who has already been KYC'd.    
 - **addUser** - Adds a user to the Sygna whitelist - requires the User to have already gone through the exchange KYC  
 - **linkAddress**  - Links an existing Address to an existing Sygna UserID. (Individual Addresses have to be linked to KYC identities)
 
@@ -92,7 +92,7 @@ Adds a user to the Sygna whitelist - requires the User to have already gone thro
 Remember — A user first has to be added before his addresses can be Sygna-Certified
 </aside>
 
-## getNewAddress
+## createNewAddress
 
 Requests a new Sygna Address (for existing Sygna user)  
 
@@ -100,7 +100,7 @@ _usage_: When a user wants a Sygna-certified address (ex: to move funds into a S
 
 ### HTTP Request
 
-**`GET`**`https://api.sygna.com/api/syg/v1/users/{sygnaUserId}/{coinType}/`
+**`POST`**`https://api.sygna.com/api/syg/v1/users/{sygnaUserId}/{coinType}/`
 
 ### URL Parameters
 
@@ -120,7 +120,7 @@ _usage_: When a user wants a Sygna-certified address (ex: to move funds into a S
 
 | Parameter    | Description                      |
 | ------------ | -------------------------------- |
-| sygnaAddress | The user address in Sygna wallet |
+| sygnaAddress | New Sygna address for that user  |
 
 
 ## Link Address

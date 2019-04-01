@@ -64,7 +64,7 @@ Adds a user to the Sygna whitelist - requires the User to have already gone thro
 ]
 ```
 
-`POST /users/addUser`
+**`POST`**`/users/addUser`
 
 ### Request Parameters
 
@@ -102,7 +102,7 @@ _usage_: When a user wants a Sygna-certified address (ex: to move funds into a S
 
 ### HTTP Request
 
-`GET /users/{userId}/getAddress/{coinType}`
+**`GET`**`/users/{userId}/getAddress/{coinType}`
 
 ### URL Parameters
 
@@ -142,7 +142,7 @@ Links an existing Address to an existing Sygna UserID.
 
 ### HTTP Request
 
-`POST /users/{sygnaUserId}/linkAddress`
+**`POST`**`/users/{sygnaUserId}/linkAddress`
 
 ### URL Parameters
 
@@ -169,7 +169,7 @@ When you want to query the status of an address
 
 ### HTTP Request
 
-`GET /addresses/{address}/getStatus`
+**`GET`**`/addresses/{address}/getStatus`
 
 ### Response Body
 > Response Body

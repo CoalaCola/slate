@@ -231,7 +231,7 @@
                     <a href="#add-user" class="toc-h2 toc-link" data-title="Add User">Add User</a>
                   </li>
                   <li>
-                    <a href="#getnewaddress" class="toc-h2 toc-link" data-title="getNewAddress">getNewAddress</a>
+                    <a href="#sygnaaddress" class="toc-h2 toc-link" data-title="SygnaAddress">SygnaAddress</a>
                   </li>
                   <li>
                     <a href="#link-address" class="toc-h2 toc-link" data-title="Link Address">Link Address</a>
@@ -264,10 +264,10 @@
 <p><strong>API METHODS:</strong></p>
 
 <p><em><strong><code>GET</code></strong></em><br>
-- <strong>getAddress</strong> -  Generates a Sygna-Certified address for a user who has already been KYC&#39;d.<br>
 - <strong>getAddressStatus</strong> - Queries the status of an address (ex: External, Whitelisted, Banned, Restricted, ...) </p>
 
 <p><em><strong><code>POST</code></strong></em><br>
+- <strong>createSygnaAddress</strong> -  Generates a Sygna-Certified address for a user who has already been KYC&#39;d.<br>
 - <strong>addUser</strong> - Adds a user to the Sygna whitelist - requires the User to have already gone through the exchange KYC<br>
 - <strong>linkAddress</strong>  - Links an existing Address to an existing Sygna UserID. (Individual Addresses have to be linked to KYC identities)</p>
 
@@ -343,12 +343,12 @@ Note — (API <b>not currently active</b> as it is being worked on)
 <aside class="success">
 Remember — A user first has to be added before his addresses can be Sygna-Certified
 </aside>
-<h2 id='getnewaddress'>getNewAddress</h2>
-<p>Requests a new Sygna Address (for existing Sygna user)  </p>
+<h2 id='sygnaaddress'>SygnaAddress</h2>
+<p>Requests an existing SygnaWallet Address (for existing Sygna user). The user must have a Sygna Wallet and activated it. (NB: in a SygnaWallet, Sygna acts as the custodian of the private keys)</p>
 
-<p><em>usage</em>: When a user wants a Sygna-certified address (ex: to move funds into a Sygna-certified address to facilitate future Sygna transaction)</p>
+<p><em>usage</em>: fetches exchisting SygnaWallet Address</p>
 <h3 id='http-request-2'>HTTP Request</h3>
-<p><strong><code>GET</code></strong><code>https://api.sygna.com/api/syg/v1/users/{sygnaUserId}/{coinType}/</code></p>
+<p><strong><code>POST</code></strong><code>https://api.sygna.com/api/syg/v1/users/{sygnaUserId}/{coinType}/</code></p>
 <h3 id='url-parameters'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -381,7 +381,7 @@ Remember — A user first has to be added before his addresses can be Sygna-Cert
 </thead><tbody>
 <tr>
 <td>sygnaAddress</td>
-<td>The user address in Sygna wallet</td>
+<td>New Sygna address for that user</td>
 </tr>
 </tbody></table>
 <h2 id='link-address'>Link Address</h2>
@@ -390,7 +390,7 @@ Remember — A user first has to be added before his addresses can be Sygna-Cert
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="w">
   </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"exchangeAddress"</span><span class="p">:</span><span class="w"> </span><span class="err">&lt;string&gt;</span><span class="w">
+      </span><span class="s2">"userAddress"</span><span class="p">:</span><span class="w"> </span><span class="err">&lt;string&gt;</span><span class="w">
   </span><span class="p">}</span><span class="w">
 
 </span></code></pre>

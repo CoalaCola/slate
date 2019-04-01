@@ -1,6 +1,6 @@
 # Errors
 
-The Sygna API uses the following error codes:
+The API uses the following error codes:
 
 | Error Code | Meaning                                                       |
 | ---------- | ------------------------------------------------------------- |

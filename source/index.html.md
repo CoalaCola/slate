@@ -24,7 +24,7 @@ _**`GET`**_
 - **getAddressStatus** - Queries the status of an address (ex: External, Whitelisted, Banned, Restricted, ...) 
 
 _**`POST`**_  
-- **createNewAddress** -  Generates a Sygna-Certified address for a user who has already been KYC'd.    
+- **createSygnaAddress** -  Generates a Sygna-Certified address for a user who has already been KYC'd.    
 - **addUser** - Adds a user to the Sygna whitelist - requires the User to have already gone through the exchange KYC  
 - **linkAddress**  - Links an existing Address to an existing Sygna UserID. (Individual Addresses have to be linked to KYC identities)
 
@@ -92,11 +92,11 @@ Adds a user to the Sygna whitelist - requires the User to have already gone thro
 Remember — A user first has to be added before his addresses can be Sygna-Certified
 </aside>
 
-## createNewAddress
+## createSygnaAddress
 
 Requests a new Sygna Address (for existing Sygna user)  
 
-_usage_: When a user wants a Sygna-certified address (ex: to move funds into a Sygna-certified address to facilitate future Sygna transaction)
+_usage_: Create a Sygna wallet (Sygna effectively becomes custodian of the User's private keys) 
 
 ### HTTP Request
 
@@ -130,7 +130,7 @@ _usage_: When a user wants a Sygna-certified address (ex: to move funds into a S
 ```json
 
   {
-      "exchangeAddress": <string>
+      "userAddress": <string>
   }
 
 ```

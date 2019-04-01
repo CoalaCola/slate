@@ -92,11 +92,11 @@ Adds a user to the Sygna whitelist - requires the User to have already gone thro
 Remember — A user first has to be added before his addresses can be Sygna-Certified
 </aside>
 
-## createSygnaAddress
+## SygnaAddress
 
-Requests a new Sygna Address (for existing Sygna user)  
+Requests an existing SygnaWallet Address (for existing Sygna user). The user must have a Sygna Wallet and activated it. (NB: in a SygnaWallet, Sygna acts as the custodian of the private keys)
 
-_usage_: Create a Sygna wallet (Sygna effectively becomes custodian of the User's private keys) 
+_usage_: fetches exchisting SygnaWallet Address
 
 ### HTTP Request
 

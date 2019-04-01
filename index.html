@@ -228,9 +228,6 @@
             <a href="#users" class="toc-h1 toc-link" data-title="Users">Users</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#add-user" class="toc-h2 toc-link" data-title="Add User">Add User</a>
-                  </li>
-                  <li>
                     <a href="#sygnaaddress" class="toc-h2 toc-link" data-title="SygnaAddress">SygnaAddress</a>
                   </li>
                   <li>
@@ -268,7 +265,6 @@
 
 <p><em><strong><code>POST</code></strong></em><br>
 - <strong>createSygnaAddress</strong> -  Generates a Sygna-Certified address for a user who has already been KYC&#39;d.<br>
-- <strong>addUser</strong> - Adds a user to the Sygna whitelist - requires the User to have already gone through the exchange KYC<br>
 - <strong>linkAddress</strong>  - Links an existing Address to an existing Sygna UserID. (Individual Addresses have to be linked to KYC identities)</p>
 
 <aside class="success">
@@ -283,72 +279,12 @@ Note — (API <b>not currently active</b> as it is being worked on)
 <h1 id='authentication'>Authentication</h1>
 <p>Design being finalized and tweaked. Shoukd be finalized soon.
 (will be using <code>OAuth 2.0</code>.)</p>
-<h1 id='users'>Users</h1><h2 id='add-user'>Add User</h2>
-<p>Adds a user to the Sygna whitelist - requires the User to have already gone through the exchange KYC</p>
-<h3 id='http-request'>HTTP Request</h3>
-<blockquote>
-<p>Request Body</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="w">
-  </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"exchangeUserId"</span><span class="p">:</span><span class="w"> </span><span class="err">&lt;string&gt;</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="err">&lt;string&gt;</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="err">&lt;string&gt;</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-
-</span></code></pre>
-<p><strong><code>POST</code></strong><code>https://api.sygna.com/api/syg/v1/users/</code></p>
-<h3 id='request-parameters'>Request Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>exchangeUserId</td>
-<td>The user id in your exchange</td>
-</tr>
-<tr>
-<td>name</td>
-<td>User name</td>
-</tr>
-<tr>
-<td>email</td>
-<td>User email</td>
-</tr>
-</tbody></table>
-<h3 id='response-parameters'>Response Parameters</h3>
-<blockquote>
-<p>Response Body</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="w">
-  </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"sygnaUserId"</span><span class="p">:</span><span class="w"> </span><span class="err">&lt;string&gt;</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-
-</span></code></pre>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>sygnaUserId</td>
-<td>The user id in Sygna</td>
-</tr>
-</tbody></table>
-
-<aside class="success">
-Remember — A user first has to be added before his addresses can be Sygna-Certified
-</aside>
-<h2 id='sygnaaddress'>SygnaAddress</h2>
+<h1 id='users'>Users</h1><h2 id='sygnaaddress'>SygnaAddress</h2>
 <p>Requests an existing SygnaWallet Address (for existing Sygna user). The user must have a Sygna Wallet and activated it. (NB: in a SygnaWallet, Sygna acts as the custodian of the private keys)</p>
 
 <p><em>usage</em>: fetches exchisting SygnaWallet Address</p>
-<h3 id='http-request-2'>HTTP Request</h3>
-<p><strong><code>POST</code></strong><code>https://api.sygna.com/api/syg/v1/users/{sygnaUserId}/{coinType}/</code></p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><strong><code>GET</code></strong><code>https://api.sygna.com/api/syg/v1/users/{sygnaUserId}?coinType={coinType}</code></p>
 <h3 id='url-parameters'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -395,8 +331,8 @@ Remember — A user first has to be added before his addresses can be Sygna-Cert
 
 </span></code></pre>
 <p>Links an existing Address to an existing Sygna UserID.</p>
-<h3 id='http-request-3'>HTTP Request</h3>
-<p><strong><code>POST</code></strong><code>https://api.sygna.com/api/syg/v1/users/{sygnaUserId}/{coinType}/</code></p>
+<h3 id='http-request-2'>HTTP Request</h3>
+<p><strong><code>POST</code></strong><code>https://api.sygna.com/api/syg/v1/users/{sygnaUserId}</code></p>
 <h3 id='url-parameters-2'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -420,11 +356,15 @@ Remember — A user first has to be added before his addresses can be Sygna-Cert
 <td>exchangeAddress</td>
 <td>The address from exchange wallet</td>
 </tr>
+<tr>
+<td>coinType</td>
+<td>Crypto address format (BTC/ETH/BCH)</td>
+</tr>
 </tbody></table>
 <h1 id='address'>Address</h1><h2 id='get-address-status'>Get Address Status</h2>
 <p>When you want to query the status of an address</p>
-<h3 id='http-request-4'>HTTP Request</h3>
-<p><strong><code>GET</code></strong><code>https://api.sygna.com/api/syg/v1/addresses/{address}/status</code></p>
+<h3 id='http-request-3'>HTTP Request</h3>
+<p><strong><code>GET</code></strong><code>https://api.sygna.com/api/syg/v1/addresses/{address}?q=status</code></p>
 <h3 id='response-body-2'>Response Body</h3>
 <blockquote>
 <p>Response Body</p>

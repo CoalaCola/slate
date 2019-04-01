@@ -25,7 +25,6 @@ _**`GET`**_
 
 _**`POST`**_  
 - **createSygnaAddress** -  Generates a Sygna-Certified address for a user who has already been KYC'd.    
-- **addUser** - Adds a user to the Sygna whitelist - requires the User to have already gone through the exchange KYC  
 - **linkAddress**  - Links an existing Address to an existing Sygna UserID. (Individual Addresses have to be linked to KYC identities)
 
 <aside class="success">
@@ -45,53 +44,6 @@ Design being finalized and tweaked. Shoukd be finalized soon.
 
 # Users
 
-## Add User
-
-Adds a user to the Sygna whitelist - requires the User to have already gone through the exchange KYC
-
-### HTTP Request
-> Request Body
-
-```json
-
-  {
-      "exchangeUserId": <string>,
-      "name": <string>,
-      "email": <string>
-  }
-
-```
-
-**`POST`**`https://api.sygna.com/api/syg/v1/users/`
-
-### Request Parameters
-
-
-| Parameter      | Description                  |
-| -------------- | ---------------------------- |
-| exchangeUserId | The user id in your exchange |
-| name           | User name                    |
-| email          | User email                   |
-
-### Response Parameters
-> Response Body
-
-```json
-
-  {
-      "sygnaUserId": <string>
-  }
-
-```
-
-| Parameter   | Description          |
-| ----------- | -------------------- |
-| sygnaUserId | The user id in Sygna |
-
-<aside class="success">
-Remember — A user first has to be added before his addresses can be Sygna-Certified
-</aside>
-
 ## SygnaAddress
 
 Requests an existing SygnaWallet Address (for existing Sygna user). The user must have a Sygna Wallet and activated it. (NB: in a SygnaWallet, Sygna acts as the custodian of the private keys)
@@ -100,13 +52,13 @@ _usage_: fetches exchisting SygnaWallet Address
 
 ### HTTP Request
 
-**`POST`**`https://api.sygna.com/api/syg/v1/users/{sygnaUserId}/{coinType}/`
+**`GET`**`https://api.sygna.com/api/syg/v1/users/{sygnaUserId}?coinType={coinType}`
 
 ### URL Parameters
 
 | Parameter | Description                               |
 | --------- | ----------------------------------------- |
-| sygnaUserId | The user id in Sygna                      |
+| sygnaUserId | The user id in Sygna                    |
 | coinType  | Crypto address format (BTC/ETH/BCH)       |
 
 ### Response Body
@@ -139,7 +91,7 @@ Links an existing Address to an existing Sygna UserID.
 
 ### HTTP Request
 
-**`POST`**`https://api.sygna.com/api/syg/v1/users/{sygnaUserId}/{coinType}/`
+**`POST`**`https://api.sygna.com/api/syg/v1/users/{sygnaUserId}`
 
 ### URL Parameters
 
@@ -152,6 +104,7 @@ Links an existing Address to an existing Sygna UserID.
 | Parameter       | Description                               |
 | --------------- | ----------------------------------------- |
 | exchangeAddress | The address from exchange wallet          |
+| coinType        | Crypto address format (BTC/ETH/BCH)       |
 
 ###
 
@@ -160,12 +113,11 @@ Links an existing Address to an existing Sygna UserID.
 ## Get Address Status
 
 
-
 When you want to query the status of an address
 
 ### HTTP Request
 
-**`GET`**`https://api.sygna.com/api/syg/v1/addresses/{address}/status`
+**`GET`**`https://api.sygna.com/api/syg/v1/addresses/{address}?q=status`
 
 ### Response Body
 > Response Body

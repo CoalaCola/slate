@@ -40,10 +40,8 @@ Production server URL for the API is located at:
 `https://api.sygna.com/api/syg/v1`
 
 # Authentication
-NOTE: Still in progress
-
-We are planning to follow `OAuth 2.0`.
-The implementation is still being worked on and will be updated at a later time
+Design being finalized and tweaked. Shoukd be finalized soon.
+(will be using `OAuth 2.0`.)
 
 # Users
 
@@ -55,16 +53,16 @@ Adds a user to the Sygna whitelist - requires the User to have already gone thro
 > Request Body
 
 ```json
-[
-      {
-          "exchangeUserId": <string>,
-          "name": <string>,
-          "email": <string>
-      }
-]
+
+  {
+      "exchangeUserId": <string>,
+      "name": <string>,
+      "email": <string>
+  }
+
 ```
 
-**`POST`**`/users/addUser`
+**`POST`**`https://api.sygna.com/api/syg/v1/users/`
 
 ### Request Parameters
 
@@ -79,11 +77,11 @@ Adds a user to the Sygna whitelist - requires the User to have already gone thro
 > Response Body
 
 ```json
-[
-      {
-          "sygnaUserId": <string>
-      }
-]
+
+  {
+      "sygnaUserId": <string>
+  }
+
 ```
 
 | Parameter   | Description          |
@@ -94,21 +92,21 @@ Adds a user to the Sygna whitelist - requires the User to have already gone thro
 Remember — A user first has to be added before his addresses can be Sygna-Certified
 </aside>
 
-## getAddress
+## getNewAddress
 
-Request a Sygna Address (for existing Sygna user)  
+Requests a new Sygna Address (for existing Sygna user)  
 
 _usage_: When a user wants a Sygna-certified address (ex: to move funds into a Sygna-certified address to facilitate future Sygna transaction)
 
 ### HTTP Request
 
-**`GET`**`/users/{userId}/getAddress/{coinType}`
+**`GET`**`https://api.sygna.com/api/syg/v1/users/{sygnaUserId}/{coinType}/`
 
 ### URL Parameters
 
 | Parameter | Description                               |
 | --------- | ----------------------------------------- |
-| userId    | The user id in Sygna                      |
+| sygnaUserId | The user id in Sygna                      |
 | coinType  | Crypto address format (BTC/ETH/BCH)       |
 
 ### Response Body
@@ -130,19 +128,18 @@ _usage_: When a user wants a Sygna-certified address (ex: to move funds into a S
 > Request Body
 
 ```json
-[
-      {
-          "coinType": <string>, #BTC|ETH...
-          "exchangeAddress": <string>
-      }
-]
+
+  {
+      "exchangeAddress": <string>
+  }
+
 ```
 
 Links an existing Address to an existing Sygna UserID.
 
 ### HTTP Request
 
-**`POST`**`/users/{sygnaUserId}/linkAddress`
+**`POST`**`https://api.sygna.com/api/syg/v1/users/{sygnaUserId}/{coinType}/`
 
 ### URL Parameters
 
@@ -154,7 +151,6 @@ Links an existing Address to an existing Sygna UserID.
 
 | Parameter       | Description                               |
 | --------------- | ----------------------------------------- |
-| coinType        | Crypto address format (BTC/ETH/BCH)       |
 | exchangeAddress | The address from exchange wallet          |
 
 ###
@@ -169,7 +165,7 @@ When you want to query the status of an address
 
 ### HTTP Request
 
-**`GET`**`/addresses/{address}/getStatus`
+**`GET`**`https://api.sygna.com/api/syg/v1/addresses/{address}/status`
 
 ### Response Body
 > Response Body
